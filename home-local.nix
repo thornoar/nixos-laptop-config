@@ -11,7 +11,8 @@
         
         font = "Hack";
         
-        windowSpace = lib.mkForce 36;
+        # windowSpace = lib.mkForce 36;
+        windowSpace = 0;
         windowBorderWidth = 0;
 
         terminalOpacity = 0.9;
