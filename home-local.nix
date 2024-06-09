@@ -2,14 +2,28 @@
 
 {
     config = {
-        wallpaperDir = "Landscapes";
         fontsize = 10;
         fontsizeBar = 14;
+
+        wallpaperDir = "Landscapes";
+        wallpaperGamma = 0.9;
+        wallpaperContrast = 1.0;
+        
+        font = "Hack";
+        
         windowSpace = lib.mkForce 36;
-        padding = { x = 6; y = 4; };
-        barheight = lib.mkForce 36;
+        windowBorderWidth = 0;
+
+        terminalOpacity = 0.9;
+        terminalPadding = { x = 6; y = 4; };
+
+        barHeight = lib.mkForce 36;
+
+        magnifiedScale = 1.5;
+
         scratchpadWidth = lib.mkForce "4 % 5";
         scratchpadHeight = lib.mkForce "35 % 50";
+
         xmobarExtraCommands = lib.mkForce ''
             Run Battery [
                 "--template" , "<acstatus>",
