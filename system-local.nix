@@ -69,6 +69,11 @@
                     ignorePerms = false;
                     devices = [ "station" ];
                 };
+                "sandbox" = {
+                    path = "~/projects/sandbox";
+                    ignorePerms = false;
+                    devices = [ "station" ];
+                };
             };
         };
 
