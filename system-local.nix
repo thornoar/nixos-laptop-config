@@ -77,6 +77,14 @@
             };
         };
 
+        hardware.bluetooth = {
+            enable = true;
+            powerOnBoot = true;
+            settings = {
+                General.Experimental = true;
+            };
+        };
+
         hardware.opengl = {
             enable = true;
             driSupport = true;
