@@ -77,14 +77,6 @@
             };
         };
 
-        hardware.bluetooth = {
-            enable = true;
-            powerOnBoot = true;
-            settings = {
-                General.Experimental = true;
-            };
-        };
-
         hardware.opengl = {
             enable = true;
             driSupport = true;
@@ -105,6 +97,14 @@
 
         # hardware.nvidia = {
         #     forceFullCompositionPipeline = true;
+
+        hardware.bluetooth = {
+            enable = true;
+            powerOnBoot = true;
+            settings = {
+                General.Experimental = true;
+            };
+        };
         # };
 
         boot.blacklistedKernelModules = [ "nouveau" ];
