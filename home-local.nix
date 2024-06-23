@@ -5,7 +5,7 @@
         fontsize = 10;
         fontsizeBar = 14;
 
-        wallpaperDir = "Landscapes";
+        wallpaperDir = "Game-Of-Thrones";
         wallpaperGamma = 0.9;
         wallpaperContrast = 1.0;
         
