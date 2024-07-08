@@ -22,13 +22,13 @@
                 '';
             };
             libinput = {
-                enable = true;
-                touchpad = {
-                    naturalScrolling = true;
-                    tapping = true;
-                    clickMethod = "clickfinger";
-                    disableWhileTyping = true;
-                };
+                enable = false;
+                # touchpad = {
+                #     naturalScrolling = true;
+                #     tapping = true;
+                #     clickMethod = "clickfinger";
+                #     disableWhileTyping = true;
+                # };
             };
         };
 
