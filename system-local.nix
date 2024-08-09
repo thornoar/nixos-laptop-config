@@ -107,6 +107,8 @@
         };
         # };
 
+        time.timeZone = "Europe/Belgrade";
+
         boot.blacklistedKernelModules = [ "nouveau" ];
     };
 }
