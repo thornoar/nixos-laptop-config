@@ -5,7 +5,7 @@
         fontsize = 10;
         fontsizeBar = 14;
 
-        wallpaperDir = "Abstract";
+        wallpaperDir = "Landscapes";
         wallpaperGamma = 0.9;
         wallpaperContrast = 1.0;
         

@@ -21,14 +21,14 @@
                     transmission-daemon
                 '';
             };
-            libinput = {
-                enable = true;
-                touchpad = {
-                    naturalScrolling = true;
-                    tapping = true;
-                    clickMethod = "clickfinger";
-                    disableWhileTyping = true;
-                };
+        };
+        services.libinput = {
+            enable = true;
+            touchpad = {
+                naturalScrolling = true;
+                tapping = true;
+                clickMethod = "clickfinger";
+                disableWhileTyping = true;
             };
         };
 
