@@ -12,11 +12,11 @@
         font = "Hack";
         
         # windowSpace = lib.mkForce 36;
-        windowSpace = 0;
+        windowSpace = 2;
         windowBorderWidth = 0;
 
         terminalOpacity = 0.9;
-        terminalPadding = { x = 6; y = 4; };
+        terminalPadding = { x = 3; y = 3; };
 
         barHeight = lib.mkForce 36;
 
