@@ -44,13 +44,17 @@
         # '';
         xmobarTemplate = lib.mkForce " %XMonadLog% }{ %kbd% | %date% | %battery% | %alsa:default:Master% ";
 
-        # home.file.".Xmodmap".text = ''
-        #     remove mod1 = Alt_R
-        #
-        #     clear mod4
-        #     keycode 108 = Super_R
-        #     add mod4 = Super_R
-        # '';
+        home.file.".Xmodmap".text = ''
+            remove mod1 = Alt_R
+
+            clear mod4
+            keycode 108 = Super_R
+            add mod4 = Super_R
+
+            keysym F8 = U00B1
+            keysym F9 = U03B5
+            keysym F10 = U03B4
+        '';
 
         home.packages = with pkgs; [
             light
