@@ -2,47 +2,51 @@
 
 {
     config = {
-        fontsize = 10;
-        fontsizeBar = 14;
+        size = lib.mkForce {
+            fontsize = 10;
+            fontsizeBar = 14;
+            windowSpace = 2;
+            windowBorderWidth = 0;
+            terminalOpacity = 0.9;
+            terminalPadding = { x = 3; y = 3; };
+            barHeight = 36;
+            magnifiedScale = 1.5;
+        };
 
-        wallpaperDir = "Landscapes";
-        wallpaperGamma = 0.9;
-        wallpaperContrast = 1.0;
-        
-        font = "Hack";
-        
-        # windowSpace = lib.mkForce 36;
-        windowSpace = 2;
-        windowBorderWidth = 0;
+        wallpaper = lib.mkForce {
+            dir = "Landscapes";
+            gamma = 0.9;
+            contrast = 1.0;
+        };
 
-        terminalOpacity = 0.9;
-        terminalPadding = { x = 3; y = 3; };
+        misc = lib.mkForce {
+            usePackageList = true;   
+            scratchpadWidth = "4 % 5";
+            scratchpadHeight = "35 % 50";
+            font = "Hack";
+        };
 
-        barHeight = lib.mkForce 36;
-
-        magnifiedScale = 1.5;
-
-        scratchpadWidth = lib.mkForce "4 % 5";
-        scratchpadHeight = lib.mkForce "35 % 50";
-
-        xmobarExtraCommands = lib.mkForce ''
-            Run Battery [
-                "--template" , "<acstatus>",
-                "--Low"      , "10",        -- units: %
-                "--High"     , "80",        -- units: %
-                "--low"      , "red",
-                "--normal"   , "orange",
-                "--high"     , "green",
-                "--",
-                "-o", "<left>% (<timeleft>)",
-                "-O", "<fc=${config.colorYellow1}>Charging</fc>",
-                "-i", "<fc=${config.colorGreen0}>Charged</fc>"
-            ] 50,
-        '';
-        # xmobarExtraOptions = ''
-        #     alpha = ${builtins.toString (builtins.floor (255*config.windowOpacity))},
-        # '';
-        xmobarTemplate = lib.mkForce " %XMonadLog% }{ %kbd% | %date% | %battery% | %alsa:default:Master% ";
+        xmobar = lib.mkForce {
+            extraCommands = ''
+                Run Battery [
+                    "--template" , "<acstatus>",
+                    "--Low"      , "10",        -- units: %
+                    "--High"     , "80",        -- units: %
+                    "--low"      , "red",
+                    "--normal"   , "orange",
+                    "--high"     , "green",
+                    "--",
+                    "-o", "<left>% (<timeleft>)",
+                    "-O", "<fc=${config.colors.colorYellow1}>Charging</fc>",
+                    "-i", "<fc=${config.colors.colorGreen0}>Charged</fc>"
+                ] 50,
+            '';
+            extraOptions  = "";
+            # xmobarExtraOptions = ''
+            #     alpha = ${builtins.toString (builtins.floor (255*config.size.windowOpacity))},
+            # '';
+            template = " %XMonadLog% }{ %kbd% | %date% | %battery% | %alsa:default:Master% ";
+        };
 
         home.file.".Xmodmap".text = ''
             remove mod1 = Alt_R

@@ -23,14 +23,14 @@
             };
         };
         services.libinput = {
-            enable = true;
-            touchpad = {
-                naturalScrolling = true;
-                tapping = true;
-                clickMethod = "clickfinger";
-                disableWhileTyping = true;
+                enable = true;
+                touchpad = {
+                    naturalScrolling = true;
+                    tapping = true;
+                    clickMethod = "clickfinger";
+                    disableWhileTyping = true;
+                };
             };
-        };
 
         fileSystems."/home/ramak/media" = {
             device = "/dev/disk/by-uuid/d365c266-1fdd-42b1-a576-e7e9efd3e53f";
