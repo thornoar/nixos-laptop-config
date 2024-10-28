@@ -8,9 +8,12 @@
             windowSpace = 2;
             windowBorderWidth = 0;
             terminalOpacity = 0.9;
-            terminalPadding = { x = 3; y = 3; };
+            terminalPaddingX = 3;
+            terminalPaddingY = 3;
             barHeight = 36;
             magnifiedScale = 1.5;
+            scratchpadWidth = "4 % 5";
+            scratchpadHeight = "35 % 50";
         };
 
         wallpaper = lib.mkForce {
@@ -21,9 +24,7 @@
 
         misc = lib.mkForce {
             usePackageList = true;   
-            scratchpadWidth = "4 % 5";
-            scratchpadHeight = "35 % 50";
-            font = "Hack";
+            systemFont = "Hack";
         };
 
         xmobar = lib.mkForce {
