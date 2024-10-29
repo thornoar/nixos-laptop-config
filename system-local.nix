@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, pkgs, pkgs-unstable, modulesPath, ... }:
 
 {
     config = {
@@ -6,6 +6,8 @@
             PCTYPE = "laptop";
             MUTTER_DEBUG_KMS_THREAD_TYPE="user";
         };
+
+        boot.kernelPackages = pkgs.linuxPackages_latest;
 
         services.xserver = {
             videoDrivers = [ "nvidiaLegacy390" ];
@@ -33,49 +35,12 @@
             };
 
         fileSystems."/home/ramak/media" = {
-            device = "/dev/disk/by-uuid/d365c266-1fdd-42b1-a576-e7e9efd3e53f";
+            device = "/dev/disk/by-uuid/aa543ce3-5cbd-4251-a01c-59ebe4a97f92";
             fsType = "ext4";
             options = [ "nofail" "rw" "user" "auto" ];
         };
-        # fileSystems."/home/ramak/basic" = {
-        #     device = "/dev/disk/by-uuid/334FB4EF0C55A12E";
-        #     fsType = "ntfs";
-        #     options = [ "nofail" "rw" "user" ];
-        # };
 
-        services.syncthing.settings = {
-            devices = {
-                "station" = { id = "BWFUHH5-FMJJFJO-JNDOMDV-LMIWAV2-QIJV7Y7-ZTUEPIE-V2BVDXT-QUSKLAL"; };
-                "phone" = { id = "RLHSCWU-KTCTYQL-FXTBMN5-CEEH3FB-3TP3B2Y-2T5FE64-SENTOZR-SE5B5QQ"; };
-            };
-            folders = {
-                "music" = {
-                    path = "~/media/music";
-                    ignorePerms = false;
-                    devices = [ "station" ];
-                };
-                "books" = {
-                    path = "~/media/books";
-                    ignorePerms = false;
-                    devices = [ "station" ];
-                };
-                "wallpapers" = {
-                    path = "~/media/wallpapers";
-                    ignorePerms = false;
-                    devices = [ "station" ];
-                };
-                "notes" = {
-                    path = "~/projects/notes";
-                    ignorePerms = false;
-                    devices = [ "station" ];
-                };
-                "sandbox" = {
-                    path = "~/projects/sandbox";
-                    ignorePerms = false;
-                    devices = [ "station" ];
-                };
-            };
-        };
+        services.upower.enable = true;
 
         hardware.opengl = {
             enable = true;
@@ -86,17 +51,13 @@
             modesetting.enable = true;
             powerManagement.enable = false;
             powerManagement.finegrained = false;
-            nvidiaSettings = true;
-            forceFullCompositionPipeline = true;
+            nvidiaSettings = false;
+            # forceFullCompositionPipeline = true;
             open = false;
-            package = config.boot.kernelPackages.nvidiaPackages.legacy_390;
-            # package = config.boot.kernelPackages.nvidiaPackages.stable;
+            package = config.boot.kernelPackages.nvidiaPackages.stable;
         };
 
         nixpkgs.config.nvidia.acceptLicense = true;
-
-        # hardware.nvidia = {
-        #     forceFullCompositionPipeline = true;
 
         hardware.bluetooth = {
             enable = true;
@@ -105,7 +66,6 @@
                 General.Experimental = true;
             };
         };
-        # };
 
         time.timeZone = "Asia/Hong_Kong";
 

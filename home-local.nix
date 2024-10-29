@@ -4,20 +4,20 @@
     config = {
         size = lib.mkForce {
             fontsize = 10;
-            fontsizeBar = 14;
-            windowSpace = 2;
+            fontsizeBar = 21;
+            windowSpace = 0;
             windowBorderWidth = 0;
             terminalOpacity = 0.9;
             terminalPaddingX = 3;
             terminalPaddingY = 3;
-            barHeight = 36;
+            barHeight = 50;
             magnifiedScale = 1.5;
             scratchpadWidth = "4 % 5";
             scratchpadHeight = "35 % 50";
         };
 
         wallpaper = lib.mkForce {
-            dir = "Landscapes";
+            dir = "Wallpapers";
             gamma = 0.9;
             contrast = 1.0;
         };
@@ -65,7 +65,6 @@
             light
             xorg.xmodmap
             brightnessctl
-            upower
             tlp
         ];
     };
