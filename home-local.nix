@@ -5,7 +5,7 @@
         size = lib.mkForce {
             fontsize = 10;
             fontsizeBar = 21;
-            windowSpace = 0;
+            windowSpace = 4;
             windowBorderWidth = 0;
             terminalOpacity = 0.9;
             terminalPaddingX = 3;
@@ -43,9 +43,6 @@
                 ] 50,
             '';
             extraOptions  = "";
-            # xmobarExtraOptions = ''
-            #     alpha = ${builtins.toString (builtins.floor (255*config.size.windowOpacity))},
-            # '';
             template = " %XMonadLog% }{ %kbd% | %date% | %battery% | %alsa:default:Master% ";
         };
 
@@ -59,13 +56,22 @@
             keysym F8 = U00B1
             keysym F9 = U03B5
             keysym F10 = U03B4
+
+            keycode  79 =  Home   Home   Home   Home
+            keycode  80 =  Up     Up     Up     Up
+            keycode  81 =  Prior  Prior  Prior  Prior
+            keycode  83 =  Left   Left   Left   Left
+            keycode  85 =  Right  Right  Right  Right
+            keycode  87 =  End    End    End    End
+            keycode  88 =  Down   Down   Down   Down
+            keycode  89 =  Next   Next   Next   Next
+            keycode  104 =  Return   Return   Return   Return
         '';
 
         home.packages = with pkgs; [
             light
             xorg.xmodmap
             brightnessctl
-            tlp
         ];
     };
 }

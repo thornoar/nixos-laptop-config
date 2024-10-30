@@ -10,7 +10,7 @@
         boot.kernelPackages = pkgs.linuxPackages_latest;
 
         services.xserver = {
-            videoDrivers = [ "nvidiaLegacy390" ];
+            # videoDrivers = [ "nvidiaLegacy470" ];
             # videoDrivers = [ "nvidia" ];
             displayManager = {
                 sessionCommands = ''
@@ -24,6 +24,7 @@
                 '';
             };
         };
+
         services.libinput = {
                 enable = true;
                 touchpad = {
@@ -40,7 +41,27 @@
             options = [ "nofail" "rw" "user" "auto" ];
         };
 
-        services.upower.enable = true;
+        services = {
+            upower.enable = true;
+            thermald.enable = true;
+            tlp = {
+                enable = true;
+                settings = {
+                    CPU_BOOST_ON_AC = 1;
+                    CPU_BOOST_ON_BAT = 0;
+                    CPU_SCALING_GOVERNOR_ON_AC = "performance";
+                    CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+                    START_CHARGE_THRESH_BAT0 = 60;
+                    STOP_CHARGE_THRESH_BAT0 = 90;
+                };
+            };
+        };
+        
+        powerManagement = {
+            enable = true;
+            powertop.enable = true;
+            cpuFreqGovernor = "powersave";
+        };
 
         hardware.opengl = {
             enable = true;
@@ -52,9 +73,25 @@
             powerManagement.enable = false;
             powerManagement.finegrained = false;
             nvidiaSettings = false;
-            # forceFullCompositionPipeline = true;
-            open = false;
+            forceFullCompositionPipeline = true;
+            open = true;
             package = config.boot.kernelPackages.nvidiaPackages.stable;
+            prime = {
+                sync.enable = true; 
+                nvidiaBusId = "PCI:1:0:0"; 
+                intelBusId = "PCI:0:2:0"; 
+            };
+        };
+
+        specialisation = {
+            offload.configuration = {
+                system.nixos.tags = [ "offload" ];
+                hardware.nvidia = {
+                    prime.offload.enable = lib.mkForce true;
+                    prime.offload.enableOffloadCmd = lib.mkForce true;
+                    prime.sync.enable = lib.mkForce false;
+                };
+            };
         };
 
         nixpkgs.config.nvidia.acceptLicense = true;
