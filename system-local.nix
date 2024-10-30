@@ -51,8 +51,8 @@
                     CPU_BOOST_ON_BAT = 0;
                     CPU_SCALING_GOVERNOR_ON_AC = "performance";
                     CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-                    START_CHARGE_THRESH_BAT0 = 60;
-                    STOP_CHARGE_THRESH_BAT0 = 90;
+                    START_CHARGE_THRESH_BAT0 = 50;
+                    STOP_CHARGE_THRESH_BAT0 = 80;
                 };
             };
         };
@@ -80,17 +80,6 @@
                 sync.enable = true; 
                 nvidiaBusId = "PCI:1:0:0"; 
                 intelBusId = "PCI:0:2:0"; 
-            };
-        };
-
-        specialisation = {
-            offload.configuration = {
-                system.nixos.tags = [ "offload" ];
-                hardware.nvidia = {
-                    prime.offload.enable = lib.mkForce true;
-                    prime.offload.enableOffloadCmd = lib.mkForce true;
-                    prime.sync.enable = lib.mkForce false;
-                };
             };
         };
 
