@@ -2,10 +2,9 @@
 
 {
     config = {
-        size = lib.mkForce {
+        xmonad = lib.mkForce {
             fontsize = 10;
             fontsizeXmobar = 22;
-            fontsizeWaybar = 11;
             windowSpaceInner = 4;
             windowSpaceOuter = 8;
             windowBorderWidth = 0;
@@ -16,6 +15,18 @@
             magnifiedScale = 1.5;
             scratchpadWidth = "4 % 5";
             scratchpadHeight = "35 % 50";
+        };
+
+        hyprland = lib.mkForce {
+            fontsize = 22;
+            fontsizeWaybar = 22;
+            windowSpaceInner = 10;
+            windowSpaceOuter = 20;
+            windowBorderWidth = 0;
+            terminalOpacity = 0.9;
+            terminalPadding = 4;
+            rounding = 8;
+            barHeight = 50;
         };
 
         wallpaper = lib.mkForce {
