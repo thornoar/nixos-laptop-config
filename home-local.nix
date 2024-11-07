@@ -2,6 +2,8 @@
 
 {
     config = {
+        home.pointerCursor.size = 16;
+
         xmonad = lib.mkForce {
             fontsize = 10;
             fontsizeXmobar = 22;
@@ -18,14 +20,14 @@
         };
 
         hyprland = lib.mkForce {
-            fontsize = 22;
-            fontsizeWaybar = 22;
-            windowSpaceInner = 10;
-            windowSpaceOuter = 20;
+            fontsize = 11;
+            fontsizeWaybar = 11;
+            windowSpaceInner = 4;
+            windowSpaceOuter = 8;
             windowBorderWidth = 0;
             terminalOpacity = 0.9;
-            terminalPadding = 4;
-            rounding = 8;
+            terminalPadding = 1;
+            rounding = 5;
             barHeight = 50;
         };
 
