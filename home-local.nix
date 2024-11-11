@@ -5,6 +5,7 @@
         home.pointerCursor.size = 16;
 
         xmonad = lib.mkForce {
+            desktopScale = 2.0;
             fontsize = 10;
             fontsizeXmobar = 22;
             windowSpaceInner = 4;
@@ -20,6 +21,7 @@
         };
 
         hyprland = lib.mkForce {
+            desktopScale = 2.0;
             fontsize = 11;
             fontsizeWaybar = 11;
             windowSpaceInner = 4;
@@ -40,6 +42,7 @@
         misc = lib.mkForce {
             usePackageList = true;   
             systemFont = "Hack";
+            monitorName = "eDP-1";
         };
 
         xmobar = lib.mkForce {

@@ -30,7 +30,7 @@
             enable = true;
             touchpad = {
                 naturalScrolling = true;
-                tapping = true;
+                tapping = false;
                 clickMethod = "clickfinger";
                 disableWhileTyping = true;
             };
