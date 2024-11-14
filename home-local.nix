@@ -59,9 +59,15 @@
                     "-O", "<fc=${config.colors.colorYellow1}>Charging</fc>",
                     "-i", "<fc=${config.colors.colorGreen0}>Charged</fc>"
                 ] 50,
+                -- Run Brightness [
+                --     "-t", "Br: <percent>%", "--", "-D", "intel_backlight"
+                -- ] 60,
+                -- Run Brightness [
+                --     "-t", "<bar>", "--", "-D", "/sys/class/backlight/intel_backlight"
+                -- ] 60,
             '';
-            extraOptions  = "";
-            template = " %XMonadLog% }{ %kbd% | %date% | %battery% | %alsa:default:Master% ";
+            extraOptions  = ""; # {
+            template = " %XMonadLog% } %alsa:default:Master% | %date% { %kbd% | %dynnetwork% | %multicpu% | %memory% | %battery% "; # }
         };
     };
 }

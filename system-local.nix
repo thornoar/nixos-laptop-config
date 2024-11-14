@@ -80,6 +80,29 @@
             ];
         };
 
+        # systemd.timers."interrupt-disable" = {
+        #     wantedBy = [ "timers.target" ];
+        #     timerConfig = {
+        #         OnBootSec = "1s";
+        #         OnUnitActiveSec = "1m";
+        #         Unit = "interrupt-disable.service";
+        #     };
+        # };
+        systemd.services."interrupt-disable" = {
+            script = ''
+                ${pkgs.coreutils}/bin/echo enable > /sys/firmware/acpi/interrupts/sci
+                ${pkgs.coreutils}/bin/echo enable > /sys/firmware/acpi/interrupts/gpe6F
+                ${pkgs.coreutils}/bin/echo disable > /sys/firmware/acpi/interrupts/sci
+                ${pkgs.coreutils}/bin/echo disable > /sys/firmware/acpi/interrupts/gpe6F
+                # /nix/store/hazsx60lrysd393fw7z7vpy4g6gn4acd-coreutils-9.5/bin/echo disable > /sys/firmware/acpi/interrupts/gpe6F
+            '';
+            serviceConfig = {
+                Type = "oneshot";
+                User = "root";
+            };
+            wantedBy = [ "multi-user.target" ];
+        };
+
         hardware.bluetooth = {
             enable = true;
             powerOnBoot = true;
