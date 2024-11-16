@@ -67,7 +67,7 @@
                 -- ] 60,
             '';
             extraOptions  = ""; # {
-            template = " %XMonadLog% } %alsa:default:Master% | %date% { %kbd% | %dynnetwork% | %multicpu% | %memory% | %battery% "; # }
+            template = " %XMonadLog% } %alsa:default:Master% | %date% { %kbd% | %multicpu% | %memory% | %battery% "; # }
         };
     };
 }
