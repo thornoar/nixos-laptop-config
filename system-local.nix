@@ -7,7 +7,7 @@
             MUTTER_DEBUG_KMS_THREAD_TYPE="user";
         };
 
-        boot.kernelPackages = pkgs.linuxPackages_latest;
+        boot.kernelPackages = pkgs-unstable.linuxPackages_latest;
 
         hardware.nvidia = {
             modesetting.enable = true;
@@ -18,6 +18,10 @@
             open = false;
             package = config.boot.kernelPackages.nvidiaPackages.production;
             prime = {
+                offload = {
+                    enable = true;
+                    enableOffloadCmd = true;
+                };
                 sync.enable = false; 
                 nvidiaBusId = "PCI:1:0:0"; 
                 intelBusId = "PCI:0:2:0"; 
@@ -45,17 +49,30 @@
         services = {
             upower.enable = true;
             thermald.enable = true;
-            tlp = {
+            auto-cpufreq = {
                 enable = true;
                 settings = {
-                    CPU_BOOST_ON_AC = 1;
-                    CPU_BOOST_ON_BAT = 0;
-                    CPU_SCALING_GOVERNOR_ON_AC = "performance";
-                    CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-                    START_CHARGE_THRESH_BAT0 = 50;
-                    STOP_CHARGE_THRESH_BAT0 = 80;
+                    battery = {
+                        governor = "powersave";
+                        turbo = "never";
+                    };
+                    charger = {
+                        governor = "performance";
+                        turbo = "auto";
+                    };
                 };
             };
+            # tlp = {
+            #     enable = true;
+            #     settings = {
+            #         # CPU_BOOST_ON_AC = 1;
+            #         # CPU_BOOST_ON_BAT = 0;
+            #         # CPU_SCALING_GOVERNOR_ON_AC = "performance";
+            #         # CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+            #         START_CHARGE_THRESH_BAT0 = 50;
+            #         STOP_CHARGE_THRESH_BAT0 = 80;
+            #     };
+            # };
         };
         powerManagement = {
             enable = true;
@@ -69,32 +86,34 @@
             driSupport = true;
             driSupport32Bit = true;
         };
+        # hardware.graphics = {
+        #     enable = true;
+        #     enable32Bit = true;
+        # };
 
         services.cron = {
             enable = true;
             systemCronJobs = [
                 "*/1 * * * * root ${pkgs.coreutils}/bin/echo disable > /sys/firmware/acpi/interrupts/sci"
                 "*/1 * * * * root ${pkgs.coreutils}/bin/echo disable > /sys/firmware/acpi/interrupts/gpe6F"
-                "@reboot root ${pkgs.coreutils}/bin/echo disable > /sys/firmware/acpi/interrupts/sci"
-                "@reboot root ${pkgs.coreutils}/bin/echo disable > /sys/firmware/acpi/interrupts/gpe6F"
+                # "@reboot root ${pkgs.coreutils}/bin/echo disable > /sys/firmware/acpi/interrupts/sci"
+                # "@reboot root ${pkgs.coreutils}/bin/echo disable > /sys/firmware/acpi/interrupts/gpe6F"
             ];
         };
 
-        # systemd.timers."interrupt-disable" = {
-        #     wantedBy = [ "timers.target" ];
-        #     timerConfig = {
-        #         OnBootSec = "1s";
-        #         OnUnitActiveSec = "1m";
-        #         Unit = "interrupt-disable.service";
-        #     };
-        # };
-        systemd.services."interrupt-disable" = {
+        systemd.timers."interrupt-allow-access" = {
+            wantedBy = [ "timers.target" ];
+            timerConfig = {
+                OnBootSec = "1";
+                OnUnitActiveSec = "10m";
+                Unit = "interrupt-allow-access.service";
+            };
+        };
+        systemd.services."interrupt-allow-access" = {
+                # ${pkgs.coreutils}/bin/echo disable > /sys/firmware/acpi/interrupts/gpe6F
             script = ''
-                ${pkgs.coreutils}/bin/echo enable > /sys/firmware/acpi/interrupts/sci
-                ${pkgs.coreutils}/bin/echo enable > /sys/firmware/acpi/interrupts/gpe6F
-                ${pkgs.coreutils}/bin/echo disable > /sys/firmware/acpi/interrupts/sci
-                ${pkgs.coreutils}/bin/echo disable > /sys/firmware/acpi/interrupts/gpe6F
-                # /nix/store/hazsx60lrysd393fw7z7vpy4g6gn4acd-coreutils-9.5/bin/echo disable > /sys/firmware/acpi/interrupts/gpe6F
+                chmod 777 /sys/firmware/acpi/interrupts/sci
+                chmod 777 /sys/firmware/acpi/interrupts/gpe6F
             '';
             serviceConfig = {
                 Type = "oneshot";
@@ -102,6 +121,24 @@
             };
             wantedBy = [ "multi-user.target" ];
         };
+        # systemd.timers."interrupt-disable" = {
+        #     wantedBy = [ "timers.target" ];
+        #     timerConfig = {
+        #         OnBootSec = "3m";
+        #         OnUnitActiveSec = "1";
+        #         Unit = "interrupt-disable.service";
+        #     };
+        # };
+        # systemd.services."interrupt-disable" = {
+        #     script = ''
+        #         echo disable > /sys/firmware/acpi/interrupts/gpe6F
+        #     '';
+        #     serviceConfig = {
+        #         Type = "oneshot";
+        #         User = "ramak";
+        #     };
+        #     wantedBy = [ "multi-user.target" ];
+        # };
 
         hardware.bluetooth = {
             enable = true;

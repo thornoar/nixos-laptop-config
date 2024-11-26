@@ -8,6 +8,7 @@
             desktopScale = 2.0;
             fontsize = 10;
             fontsizeXmobar = 22;
+            fontsizeRunPrompt = 11;
             windowSpaceInner = 4;
             windowSpaceOuter = 8;
             windowBorderWidth = 0;
@@ -18,6 +19,7 @@
             magnifiedScale = 1.5;
             scratchpadWidth = "4 % 5";
             scratchpadHeight = "35 % 50";
+            firefoxScale = 0.9;
         };
 
         hyprland = lib.mkForce {
@@ -31,6 +33,7 @@
             terminalPadding = 1;
             rounding = 5;
             barHeight = 50;
+            firefoxScale = 1.7;
         };
 
         wallpaper = lib.mkForce {
@@ -43,6 +46,7 @@
             usePackageList = true;   
             systemFont = "Hack";
             monitorName = "eDP-1";
+            wmStartupCommand = "sleep 6; echo disable > /sys/firmware/acpi/interrupts/gpe6F; sleep 1; echo disable > /sys/firmware/acpi/interrupts/gpe6F; sleep 1; echo disable > /sys/firmware/acpi/interrupts/gpe6F";
         };
 
         xmobar = lib.mkForce {
@@ -59,15 +63,12 @@
                     "-O", "<fc=${config.colors.colorYellow1}>Charging</fc>",
                     "-i", "<fc=${config.colors.colorGreen0}>Charged</fc>"
                 ] 50,
-                -- Run Brightness [
-                --     "-t", "Br: <percent>%", "--", "-D", "intel_backlight"
-                -- ] 60,
-                -- Run Brightness [
-                --     "-t", "<bar>", "--", "-D", "/sys/class/backlight/intel_backlight"
-                -- ] 60,
+                Run Brightness [
+                    "-t", "<fc=${config.colors.colorMagenta1}>BRI: <percent>%</fc>", "--", "-D", "intel_backlight"
+                ] 60,
             '';
             extraOptions  = ""; # {
-            template = " %XMonadLog% } %alsa:default:Master% | %date% { %kbd% | %multicpu% | %memory% | %battery% "; # }
+            template = " %XMonadLog% } %alsa:default:Master% | %date% { %bright% | %kbd% | %multicpu% | %memory% | %battery% "; # }
         };
     };
 }
