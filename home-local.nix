@@ -46,7 +46,7 @@
             usePackageList = true;   
             systemFont = "Hack";
             monitorName = "eDP-1";
-            wmStartupCommand = "sleep 6; echo disable > /sys/firmware/acpi/interrupts/gpe6F; sleep 1; echo disable > /sys/firmware/acpi/interrupts/gpe6F; sleep 1; echo disable > /sys/firmware/acpi/interrupts/gpe6F";
+            wmStartupCommand = "sleep 8; echo disable > /sys/firmware/acpi/interrupts/gpe6F; sleep 1; echo disable > /sys/firmware/acpi/interrupts/gpe6F; sleep 1; echo disable > /sys/firmware/acpi/interrupts/gpe6F";
         };
 
         xmobar = lib.mkForce {

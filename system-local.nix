@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgs-old, pkgs-unstable, modulesPath, ... }:
+{ config, pkgs, pkgs-unstable, modulesPath, ... }:
 
 {
     config = {
@@ -9,26 +9,39 @@
 
         boot.kernelPackages = pkgs-unstable.linuxPackages_latest;
 
+        nixpkgs.config.nvidia.acceptLicense = true;
+        boot = {
+            initrd.kernelModules = [ "i915" ];
+            blacklistedKernelModules = [ "nouveau" ];
+        };
         hardware.nvidia = {
             modesetting.enable = true;
-            powerManagement.enable = true;
+            powerManagement.enable = false;
             powerManagement.finegrained = false;
             nvidiaSettings = true;
             forceFullCompositionPipeline = true;
             open = false;
-            package = config.boot.kernelPackages.nvidiaPackages.production;
+            package = config.boot.kernelPackages.nvidiaPackages.beta;
             prime = {
                 offload = {
                     enable = true;
                     enableOffloadCmd = true;
                 };
-                sync.enable = false; 
-                nvidiaBusId = "PCI:1:0:0"; 
+                # sync.enable = true; 
                 intelBusId = "PCI:0:2:0"; 
+                nvidiaBusId = "PCI:1:0:0"; 
             };
         };
-        nixpkgs.config.nvidia.acceptLicense = true;
-        boot.blacklistedKernelModules = [ "nouveau" ];
+        hardware.opengl = {
+            enable = true;
+            driSupport = true;
+            driSupport32Bit = true;
+            extraPackages = [ pkgs.intel-media-driver ];
+        };
+        # hardware.graphics = {
+        #     enable = true;
+        #     enable32Bit = true;
+        # };
 
         services.libinput = {
             enable = true;
@@ -80,16 +93,6 @@
             cpuFreqGovernor = "powersave";
             resumeCommands = "${pkgs.kmod}/bin/rmmod atkbd; ${pkgs.kmod}/bin/modprobe atkbd reset=1";
         };
-
-        hardware.opengl = {
-            enable = true;
-            driSupport = true;
-            driSupport32Bit = true;
-        };
-        # hardware.graphics = {
-        #     enable = true;
-        #     enable32Bit = true;
-        # };
 
         services.cron = {
             enable = true;
