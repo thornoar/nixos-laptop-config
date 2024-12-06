@@ -11,7 +11,7 @@
 
         nixpkgs.config.nvidia.acceptLicense = true;
         boot = {
-            initrd.kernelModules = [ "i915" ];
+            # initrd.kernelModules = [ "i915" ];
             blacklistedKernelModules = [ "nouveau" ];
         };
         hardware.nvidia = {
