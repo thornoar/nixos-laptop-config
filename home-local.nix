@@ -33,7 +33,7 @@
             terminalPadding = 1;
             rounding = 5;
             barHeight = 50;
-            firefoxScale = 1.7;
+            firefoxScale = 1.8;
         };
 
         wallpaper = lib.mkForce {

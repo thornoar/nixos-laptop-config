@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, modulesPath, ... }:
+{ config, pkgs, modulesPath, ... }:
 
 {
     config = {
@@ -7,19 +7,18 @@
             MUTTER_DEBUG_KMS_THREAD_TYPE="user";
         };
 
-        boot.kernelPackages = pkgs-unstable.linuxPackages_latest;
+        boot.kernelPackages = pkgs.linuxPackages_latest;
 
         nixpkgs.config.nvidia.acceptLicense = true;
-        boot = {
-            # initrd.kernelModules = [ "i915" ];
-            blacklistedKernelModules = [ "nouveau" ];
-        };
+        boot.blacklistedKernelModules = [ "nouveau" ];
         hardware.nvidia = {
             modesetting.enable = true;
             powerManagement.enable = false;
             powerManagement.finegrained = false;
-            nvidiaSettings = true;
-            forceFullCompositionPipeline = true;
+
+            nvidiaSettings = false;
+            forceFullCompositionPipeline = false;
+            
             open = false;
             package = config.boot.kernelPackages.nvidiaPackages.beta;
             prime = {
@@ -32,16 +31,13 @@
                 nvidiaBusId = "PCI:1:0:0"; 
             };
         };
-        hardware.opengl = {
+        hardware.graphics = {
             enable = true;
-            driSupport = true;
-            driSupport32Bit = true;
-            extraPackages = [ pkgs.intel-media-driver ];
+            enable32Bit = true;
+            # driSupport = true;
+            # driSupport32Bit = true;
+            # extraPackages = [ pkgs.intel-media-driver ];
         };
-        # hardware.graphics = {
-        #     enable = true;
-        #     enable32Bit = true;
-        # };
 
         services.libinput = {
             enable = true;
