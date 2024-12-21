@@ -7,18 +7,36 @@
             MUTTER_DEBUG_KMS_THREAD_TYPE="user";
         };
 
+        boot.extraModprobeConfig = ''
+            blacklist nouveau
+            options nouveau modeset=0
+        '';
+
+        services.udev.extraRules = ''
+            # Remove NVIDIA USB xHCI Host Controller devices, if present
+            ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0330", ATTR{power/control}="auto", ATTR{remove}="1"
+
+            # Remove NVIDIA USB Type-C UCSI devices, if present
+            ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c8000", ATTR{power/control}="auto", ATTR{remove}="1"
+
+            # Remove NVIDIA Audio devices, if present
+            ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x040300", ATTR{power/control}="auto", ATTR{remove}="1"
+
+            # Remove NVIDIA VGA/3D controller devices
+            ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x03[0-9]*", ATTR{power/control}="auto", ATTR{remove}="1"
+        '';
+
+        boot.blacklistedKernelModules = [ "nouveau" "nvidia" "nvidia_drm" "nvidia_modeset" ];
+
         boot.kernelPackages = pkgs.linuxPackages_latest;
 
         nixpkgs.config.nvidia.acceptLicense = true;
-        boot.blacklistedKernelModules = [ "nouveau" ];
         hardware.nvidia = {
             modesetting.enable = true;
             powerManagement.enable = false;
             powerManagement.finegrained = false;
-
             nvidiaSettings = false;
             forceFullCompositionPipeline = false;
-            
             open = false;
             package = config.boot.kernelPackages.nvidiaPackages.beta;
             prime = {
@@ -34,9 +52,6 @@
         hardware.graphics = {
             enable = true;
             enable32Bit = true;
-            # driSupport = true;
-            # driSupport32Bit = true;
-            # extraPackages = [ pkgs.intel-media-driver ];
         };
 
         services.libinput = {
@@ -109,7 +124,6 @@
             };
         };
         systemd.services."interrupt-allow-access" = {
-                # ${pkgs.coreutils}/bin/echo disable > /sys/firmware/acpi/interrupts/gpe6F
             script = ''
                 chmod 777 /sys/firmware/acpi/interrupts/sci
                 chmod 777 /sys/firmware/acpi/interrupts/gpe6F
@@ -138,6 +152,25 @@
         #     };
         #     wantedBy = [ "multi-user.target" ];
         # };
+
+        services.syncthing.settings = {
+            devices = {
+                # "laptop" = { id = "TCSGHBY-J7S2EQC-4TZW6ZW-Q7PXKL4-J74ZR37-NJKZDGG-EHEL47Y-OHWZ5A5"; };
+                # "phone" = { id = "RLHSCWU-KTCTYQL-FXTBMN5-CEEH3FB-3TP3B2Y-2T5FE64-SENTOZR-SE5B5QQ"; };
+            };
+            folders = {
+                "music" = {
+                    path = "~/media/music";
+                    ignorePerms = false;
+                    devices = [];
+                };
+                "books" = {
+                    path = "~/media/books";
+                    ignorePerms = false;
+                    devices = [];
+                };
+            };
+        };
 
         hardware.bluetooth = {
             enable = true;

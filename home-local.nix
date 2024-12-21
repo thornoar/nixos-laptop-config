@@ -24,6 +24,7 @@
 
         hyprland = lib.mkForce {
             desktopScale = 2.0;
+            resolution = "2880x1620";
             fontsize = 11;
             fontsizeWaybar = 11;
             windowSpaceInner = 4;
