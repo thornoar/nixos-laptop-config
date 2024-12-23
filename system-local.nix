@@ -69,6 +69,11 @@
             fsType = "ext4";
             options = [ "nofail" "rw" "user" "auto" ];
         };
+        fileSystems."/home/ramak/media/films" = {
+            device = "/dev/disk/by-uuid/d365c266-1fdd-42b1-a576-e7e9efd3e53f";
+            fsType = "ext4";
+            options = [ "nofail" "rw" "user" "auto" ];
+        };
 
         services = {
             upower.enable = true;
@@ -180,7 +185,7 @@
             };
         };
 
-        time.timeZone = "Asia/Hong_Kong";
+        time.timeZone = "Europe/Belgrade";
 
         environment.systemPackages = with pkgs; [
             light
