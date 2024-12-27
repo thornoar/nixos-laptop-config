@@ -160,8 +160,7 @@
 
         services.syncthing.settings = {
             devices = {
-                # "laptop" = { id = "TCSGHBY-J7S2EQC-4TZW6ZW-Q7PXKL4-J74ZR37-NJKZDGG-EHEL47Y-OHWZ5A5"; };
-                # "phone" = { id = "RLHSCWU-KTCTYQL-FXTBMN5-CEEH3FB-3TP3B2Y-2T5FE64-SENTOZR-SE5B5QQ"; };
+                "station" = { id = "BWFUHH5-FMJJFJO-JNDOMDV-LMIWAV2-QIJV7Y7-ZTUEPIE-V2BVDXT-QUSKLAL"; };
             };
             folders = {
                 "music" = {
@@ -173,6 +172,11 @@
                     path = "~/media/books";
                     ignorePerms = false;
                     devices = [];
+                };
+                "sandbox" = {
+                    path = "~/projects/sandbox";
+                    ignorePerms = false;
+                    devices = [ "station" ];
                 };
             };
         };
